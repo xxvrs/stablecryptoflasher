@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ERC20 Transfer Monitor</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header>
+        <h1>ERC20 Failure Monitor</h1>
+        <p>
+          Run transfers between wallets you control, then watch how they inevitably revert on
+          Ethereum mainnet. The dashboard deliberately underfunds gas so every transaction fails,
+          helping you inspect pending and revert states in a controlled way.
+        </p>
+      </header>
+
+      <section class="card">
+        <form id="transfer-form" autocomplete="off">
+          <div class="grid">
+            <label class="field">
+              <span>Ethereum RPC URL</span>
+              <input
+                name="rpcUrl"
+                type="text"
+                placeholder="https://mainnet.infura.io/v3/YOUR_PROJECT_ID"
+                required
+              />
+            </label>
+
+            <label class="field">
+              <span>Sender Private Key</span>
+              <input
+                name="privateKey"
+                type="password"
+                placeholder="0x..."
+                required
+              />
+            </label>
+
+            <label class="field">
+              <span>Token Contract Address</span>
+              <input
+                name="tokenAddress"
+                type="text"
+                placeholder="0xTOKEN_CONTRACT_ADDRESS"
+                required
+              />
+            </label>
+
+            <label class="field">
+              <span>Recipient Address</span>
+              <input
+                name="recipient"
+                type="text"
+                placeholder="0xRECIPIENT_ADDRESS"
+                required
+              />
+            </label>
+
+            <label class="field">
+              <span>Amount (whole units)</span>
+              <input
+                name="amount"
+                type="number"
+                step="any"
+                min="0"
+                placeholder="0.1"
+                required
+              />
+            </label>
+
+            <label class="field">
+              <span>Gas Price (gwei, optional)</span>
+              <input name="gasPriceGwei" type="number" step="any" min="0" />
+              <small>The server ignores custom gas limits and sets them too low to force failure.</small>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button type="submit" id="send-button">Send Transfer</button>
+            <button type="button" id="clear-console" class="secondary">Clear Console</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <header class="card-header">
+          <h2>Live Console</h2>
+          <span id="session-status" class="status">Idle</span>
+        </header>
+        <pre id="log-output" class="console" aria-live="polite"></pre>
+      </section>
+
+      <section class="notice">
+        <h3>Safety tips</h3>
+        <ul>
+          <li>Only use wallets and tokens that you control.</li>
+          <li>Double-check amounts and gas settings before sending to mainnet.</li>
+          <li>The server always underfunds gas so every transfer reverts. Expect the tx to fail.</li>
+        </ul>
+      </section>
+    </main>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
